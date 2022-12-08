@@ -34,11 +34,21 @@ public class StudentController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/search",consumes = "application/json",produces = "application/json")
-    public String Searchstudent(@RequestBody Students s){
+    public List<Students> Searchstudent(@RequestBody Students s){
         String name=String.valueOf(s.getName());
         System.out.println(name);
-        return "hello";
+
+        return (List<Students>) dao.Searchstudent(s.getName());
 
     }
-
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/delete",consumes = "application/json",produces = "application/json")
+    public Map<String,String> Deletestudent(@RequestBody Students s){
+        String id = String.valueOf(s.getId());
+        System.out.println(id);
+        dao.deleteStudent(s.getId());
+        HashMap<String,String> map = new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
 }
